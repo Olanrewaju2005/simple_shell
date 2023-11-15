@@ -1,0 +1,60 @@
+#include "shell.h"
+/**
+  *_strcpy - copies the string pointed to by src
+  *@dest: char type string
+  *@src: char type string
+  *Description: copy the string pointrd to by the pointer `src` to
+  *the buffer pointed to by `dest`
+  *Return: pointer to `dest`
+  */
+char *_strcpy(char *dest, char *src)
+{
+	int z = -1;
+
+	do {
+		z++;
+		dest[z] = src[z];
+	} while (src[z] != '\0');
+	return (dest);
+}
+
+/**
+  *_strcat - funtion concatenates two strings
+  *@dest: destinaation string
+  *@src: source string
+  *Return: pointer to s1
+  */
+char *_strcat(char *dest, char *src)
+{
+	int i;
+	int j;
+
+	i = 0;
+	while (dest[i] != '\0')
+	{
+		i++;
+	}
+	j = 0;
+	while (src[j] != '\0')
+	{
+		dest[i] = src[j];
+		i++;
+		j++;
+	}
+	return (dest);
+
+}
+
+/**
+  *_str_len - this function returns the length of a string
+  *@s: string to be computed
+  *Return: the length of the string
+  */
+int _str_len(char *str)
+{
+	int string_length = 0;
+
+	while (str[string_length])
+		string_length++;
+	return (string_length);
+}
