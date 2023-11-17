@@ -60,14 +60,16 @@ char *get_location(char *arg)
   *@arg:
   *
   *Return:
+  */
  
 char *check_in_path(char *arg)
 {
 	char *path, *path_cpy, *path_tok, *delim;
+
+	delim = ":";
 	path = getenv("PATH");
 	path_cpy = strdup(path);
 	path_tok = strtok(path_cpy, delim);
-	delim = ":";
 
 	while (path_tok != NULL)
 	{
@@ -78,4 +80,4 @@ char *check_in_path(char *arg)
 	}
 	free(path_cpy);
 	return (NULL);
-} */
+}

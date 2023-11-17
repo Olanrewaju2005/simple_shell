@@ -17,6 +17,7 @@ int main(int c, char **argv, char **env)
 	char *buffer = NULL;
 	char *input_tok;
 	char *path;
+	char *full_path;
 
 	(void)c;
 	(void)argv;
@@ -52,18 +53,8 @@ int main(int c, char **argv, char **env)
 		}
 		arg[j] = NULL;
 
-		/* execute a given command */
-		path = get_location(arg[0]);
-
-		if (path == NULL)
-		{
-			if (handle_builtin(arg[0], arg) != 0)
-			{
-				perror("command not found");
-				continue;
-			}
-		}
-		else
+		full_path = check_in_path(arg[0]);
+		if (full_path != NULL)
 		{
 			child_ID = fork();
 
@@ -75,12 +66,47 @@ int main(int c, char **argv, char **env)
 			}
 			else if (child_ID == 0)
 			{
-				exe = execve(path, arg, env);
+				exe = execve(full_path, arg, env);
 				if (exe == -1)
 					perror("Command does not exist");
 			}
 			else
 				wait(&waitstatus);
+
+			continue;
+		}
+		else
+		{
+			/* execute a given command */
+			path = get_location(arg[0]);
+
+			if (path == NULL)
+			{
+				if (handle_builtin(arg[0], arg) != 0)
+				{
+					perror("command not found");
+					continue;
+				}
+			}
+			else
+			{
+				child_ID = fork();
+
+				if (child_ID < 0)
+				{
+					perror("forking error");
+					free(buffer);
+					exit(0);
+				}
+				else if (child_ID == 0)
+				{
+					exe = execve(path, arg, env);
+					if (exe == -1)
+						perror("Command does not exist");
+				}
+				else
+					wait(&waitstatus);
+			}
 		}
 	}
 	free(buffer);
