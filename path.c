@@ -40,7 +40,6 @@ char *get_location(char *arg)
 {
 	char *path;
 	char *path_ex;
-	char *full_path;
 	path = getenv("PATH");
 
 	if (path)

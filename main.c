@@ -9,14 +9,17 @@
 int main(int c, char **argv, char **env)
 {
 	ssize_t num_chars;
+	pid_t child_ID;
 	size_t size = 0;
 	char *arg[MAX_INPUT_SIZE], *delim = " ";
 	int j, waitstatus, exe;
-	pid_t child_ID;
 	char *prompt = "($) ";
 	char *buffer = NULL;
 	char *input_tok;
 	char *path;
+
+	(void)c;
+	(void)argv;
 
 	while (1)
 	{
