@@ -70,18 +70,14 @@ int main(int c, char **argv, char **env)
 				free(buffer);
 				exit(0);
 			}
-			if (child_ID < 0)
+			else if (child_ID == 0)
 			{
-				exe = execve(arg[0], arg, env);
+				exe = execve(path, arg, env);
 				if (exe == -1)
 					perror("Command does not exist");
 			}
-
-			if(waitpid(child_ID, &waitstatus, 0) == -1)
-			{
-				perror("Error occured (wait)");
-				exit(0);
-			}
+			else
+				wait(&waitstatus);
 		}
 	}
 	free(buffer);
