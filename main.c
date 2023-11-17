@@ -10,11 +10,12 @@ int main(int c, char **argv, char **env)
 {
 	ssize_t num_chars;
 	size_t size = 0;
-	char *arg[15], *delim = " ";
-	int i, j, waitstatus, exe;
+	char *arg[MAX_INPUT_SIZE], *delim = " ";
+	int j, waitstatus, exe;
 	pid_t child_ID;
 	char *prompt = "($) ";
 	char *buffer = NULL;
+	char *input_tok;
 	char *path;
 
 	while (1)
@@ -30,6 +31,7 @@ int main(int c, char **argv, char **env)
 		{
 			free(buffer);
 			exit(0);
+			_printstr("\n");
 		}
 		/* assign 0 to the last character which is the null terminator */
 		if (buffer[num_chars - 1] == '\n')
@@ -37,11 +39,13 @@ int main(int c, char **argv, char **env)
 
 		/* tokenize user input */
 		j = 0;
-		arg[j]  = strtok(buffer, delim);
+		input_tok = strtok(buffer, delim);
 
-		while(arg[j])
+		while(input_tok != NULL && j < MAX_INPUT_SIZE -1)
 		{
-			arg[++j] = strtok(NULL, delim);
+			arg[j] = input_tok;
+			j++;
+			input_tok = strtok(NULL, delim);
 		}
 		arg[j] = NULL;
 
@@ -56,7 +60,7 @@ int main(int c, char **argv, char **env)
 				continue;
 			}
 		}
-		else 
+		else
 		{
 			child_ID = fork();
 
@@ -66,14 +70,14 @@ int main(int c, char **argv, char **env)
 				free(buffer);
 				exit(0);
 			}
-			else if (child_ID == 0)
+			if (child_ID < 0)
 			{
 				exe = execve(arg[0], arg, env);
 				if (exe == -1)
 					perror("Command does not exist");
 			}
 
-			if(waitpid(child_ID, &waitstatus, 0) == 0)
+			if(waitpid(child_ID, &waitstatus, 0) == -1)
 			{
 				perror("Error occured (wait)");
 				exit(0);

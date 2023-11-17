@@ -26,22 +26,22 @@ char *_strcpy(char *dest, char *src)
   */
 char *_strcat(char *dest, char *src)
 {
-	int i;
-	int j;
+	char *dest_temp = dest;
 
-	i = 0;
-	while (dest[i] != '\0')
+	if (!src)
+		return (dest);
+
+	while (*dest)
 	{
-		i++;
+		dest++;
 	}
-	j = 0;
-	while (src[j] != '\0')
+
+	while (*src)
 	{
-		dest[i] = src[j];
-		i++;
-		j++;
+		*dest++ = *src++;
 	}
-	return (dest);
+	*dest = *src;
+	return (dest_temp);
 
 }
 
@@ -54,7 +54,10 @@ int _str_len(char *str)
 {
 	int string_length = 0;
 
-	while (str[string_length])
-		string_length++;
+	if(!str)
+		return (string_length);
+
+	for (string_length = 0; str[string_length]; string_length++)
+		;
 	return (string_length);
 }
