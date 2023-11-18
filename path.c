@@ -1,9 +1,10 @@
 #include "shell.h"
-/**arg_location -
-  *@path:
-  *@arg:
+/**
+  *arg_location - gets te location of an argument in path
+  *@path: PATH env variable
+  *@arg: argument whose location is to e found
   *
-  *Return:
+  *Return: location of the argument
   */
 char *arg_location(char *path, char *arg)
 {
@@ -21,7 +22,7 @@ char *arg_location(char *path, char *arg)
 		_strcat(file_path, arg);
 		_strcat(file_path, "\0");
 
-		if(access(file_path, X_OK) == 0)
+		if (access(file_path, X_OK) == 0)
 			return (strdup(file_path));
 
 		path_tok = strtok(NULL, delim);
@@ -31,24 +32,22 @@ char *arg_location(char *path, char *arg)
 	return (NULL);
 }
 
-/**get_location -
-  *@arg:
+/**
+  *get_location - get location of an argument
+  *@arg: argument whose location is to be found
   *
-  *Return:
+  *Return: location of the argument
   */
 char *get_location(char *arg)
 {
 	char *path;
 	char *path_ex;
+
 	path = getenv("PATH");
 
 	if (path)
 	{
-		/*full_path = check_in_path(arg);
-		if (full_path != NULL)
-			return (full_path);*/
-
-			path_ex = arg_location(path, arg);
+		path_ex = arg_location(path, arg);
 			return (path_ex);
 
 	}
@@ -56,12 +55,13 @@ char *get_location(char *arg)
 	return (NULL);
 }
 
-/**check_in_path -
-  *@arg:
+/**
+  *check_in_path - checks if fullpath of argument was
+  *entered by the user
+  *@arg: argument to be checked
   *
-  *Return:
-  */
- 
+  *Return: fullpath if it was entered by the user
+ */
 char *check_in_path(char *arg)
 {
 	char *path, *path_cpy, *path_tok, *delim;

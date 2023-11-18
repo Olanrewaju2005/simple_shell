@@ -24,7 +24,8 @@ char *get_location(char *arg);
 char *arg_location(char *path, char *arg);
 int _putchar(char c);
 int handle_builtin(char *cmd, char *arg[]);
-char *ss_getenv(const char *env_name);
+char *ss_getenv(char *env_name);
 char *check_in_path(char *arg);
+void execute_cmd(const char *pathname, char *const argv[], char *const env[]);
 
 #endif

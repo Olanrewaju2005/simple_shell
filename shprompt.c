@@ -15,6 +15,13 @@ int _printstr(char *text)
 	}
 	return (count);
 }
+
+/**
+  *_putchar - prints an entry to standard output
+  *@c: character to be printed
+  *
+  *Return: 0 on succes
+  */
 int _putchar(char c)
 {
 	return (write(1, &c, 1));

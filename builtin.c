@@ -1,8 +1,10 @@
 #include "shell.h"
-/**hanlde_builtin -
-  *
-  *
-  *Return:
+
+/**
+  *handle_builtin - handles builtin commands
+  *@cmd: command enterd by user
+  *@arg: array of argument vectors
+  *Return: 0 on success
   */
 int handle_builtin(char *cmd, char *arg[])
 {

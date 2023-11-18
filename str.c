@@ -47,14 +47,14 @@ char *_strcat(char *dest, char *src)
 
 /**
   *_str_len - this function returns the length of a string
-  *@s: string to be computed
+  *@str: string to be computed
   *Return: the length of the string
   */
 int _str_len(char *str)
 {
 	int string_length = 0;
 
-	if(!str)
+	if (!str)
 		return (string_length);
 
 	for (string_length = 0; str[string_length]; string_length++)

@@ -1,10 +1,11 @@
 #include "shell.h"
 
-/**_realloc - 
-  *@o_size:
-  *@n_size:
-  *
-  *Return:
+/**
+  *_realloc - reallocates space already allocated
+  *@o_size: old size
+  *@n_size: new size
+  *@prev_alloc: previous allocation
+  *Return: void
   */
 void *_realloc(void *prev_alloc, ssize_t o_size, ssize_t n_size)
 {
@@ -26,7 +27,7 @@ void *_realloc(void *prev_alloc, ssize_t o_size, ssize_t n_size)
 	{
 		n_alloc = malloc(n_size);
 		if (n_alloc == NULL)
-			return (NULL); /* memory allocation failed */
+			return (NULL);
 
 		return (n_alloc);
 	}
@@ -45,18 +46,19 @@ void *_realloc(void *prev_alloc, ssize_t o_size, ssize_t n_size)
 
 	free(prev_alloc);
 	return (n_alloc);
-	
 }
 
-/**update_line_size -
-  *@lineptr:
-  *@size:
-  *@buffer:
-  *@buffsize:
+/**
+  *update_line_size - updates the line size
+  *@lineptr: line pointer
+  *@size: size to be updated
+  *@buffer: buffer that holds input
+  *@buffsize: size of buffer
   *
-  *Return:
+  *Return: void
   */
-void update_line_size(char **lineptr, size_t *size, char *buffer, size_t buffsize)
+void update_line_size(char **lineptr, size_t *size,
+		char *buffer, size_t buffsize)
 {
 	if (*lineptr == NULL)
 	{
@@ -81,10 +83,10 @@ void update_line_size(char **lineptr, size_t *size, char *buffer, size_t buffsiz
 	}
 }
 
-/**_getline - function gets input entered by user and stores it in  a buffer
+/**
+  *_getline - function gets input entered by user and stores it in  a buffer
   *@lineptr: stores address of buffer containing the text
   *@size: size of line to  be read
-  *@stream: stream to be read from i.e STDIN or STDOUT
   *
   *Return: number of characters read are returned o success and -1 on faliure
  */
@@ -95,6 +97,7 @@ ssize_t _getline(char **lineptr, size_t *size)
 	static char *buffer;
 	char ch;
 	int r;
+
 	ch = **lineptr;
 	count = 0;
 
@@ -123,7 +126,7 @@ ssize_t _getline(char **lineptr, size_t *size)
 	buffer[count] = ch;
 	count++;
 	}
-	
+
 	buffer[count + 1] = '\0';
 
 	update_line_size(lineptr, size, buffer, count);
